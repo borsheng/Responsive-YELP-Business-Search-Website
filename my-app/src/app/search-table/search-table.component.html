@@ -1,0 +1,27 @@
+<div class="row" *ngIf="show_table" [hidden]="show_detail">
+    <div>
+        <table class="table table-striped bg-white mt-4 mb-5 rounded-3 col-11 col-md-10 mx-auto">
+            <thead>
+                <tr>
+                    <th class="pl-4" scope="col">#</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Business Name</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Distance (miles)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of show_yelp; index as i" (click)="get_detail(show_yelp[i].id)" (click)="get_review(show_yelp[i].id)">
+                    <th style="cursor: pointer;" class="pl-4" scope="row">{{i+1}}</th>
+                    <td style="cursor: pointer;" class="w-25 h-25">
+                        <img style="aspect-ratio: 1;" width="100" height="100" src={{show_yelp[i].image_url}} class="img-fluid" alt="image">
+                    </td>
+                    <td style="cursor: pointer;">{{show_yelp[i].name}}</td>
+                    <td style="cursor: pointer;">{{show_yelp[i].rating}}</td>
+                    <td style="cursor: pointer;">{{(show_yelp[i].distance*0.0006213).toFixed(0)}}</td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<app-detail-card></app-detail-card>

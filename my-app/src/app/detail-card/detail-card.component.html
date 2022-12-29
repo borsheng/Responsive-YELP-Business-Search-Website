@@ -1,0 +1,185 @@
+<div class="row" *ngIf="show_detail">
+    <div class="bg-white p-0 mt-4 mb-5 rounded-3 col-11 col-md-7 mx-auto">
+        <div class="ml-2 mt-2">
+            <svg style="cursor: pointer;" (click)="back_table()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </div>
+        <div class="mt-2 mb-3 col-md-12 col-12">
+            <h4 *ngIf="yelp_detail" style="text-align:'center'">{{yelp_detail.name}}</h4>
+        </div>
+        <mat-tab-group mat-align-tabs="center" backgroundColor="accent">
+            <mat-tab label="Business details">
+                <div class="row" *ngIf="yelp_detail">
+                    <div *ngIf="show_address" class="mt-4 pl-3 pr-3 col-md-6 col-11 mx-auto" style="text-align:'center'">
+                        <h5>Address</h5>
+                        <p>{{yelp_detail.location.display_address}}</p>
+                    </div>
+                    <div class="mt-4 pl-3 pr-3 col-md-6 col-11 mx-auto" style="text-align:'center'">
+                        <h5>Category</h5>
+                        <a>{{get_category}}</a>
+                    </div>
+                </div>
+                <div class="row" *ngIf="yelp_detail">
+                    <div *ngIf="show_phone" class="mt-4 pl-3 pr-3 col-md-6 col-11 mx-auto" style="text-align:'center'">
+                        <h5>Phone</h5>
+                        <p>{{yelp_detail.display_phone}}</p>
+                    </div>
+                    <div *ngIf="show_price" class="mt-4 pl-3 pr-3 col-md-6 col-11 mx-auto" style="text-align:'center'">
+                        <h5>Price range</h5>
+                        <p>{{yelp_detail.price}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="yelp_detail.hours" class="mt-4 pl-3 pr-3 col-md-6 col-11 mx-auto" style="text-align:'center'">
+                        <h5>Status</h5>
+                        <p class="text-success" *ngIf="status_true">Open Now</p>
+                        <p class="text-danger" *ngIf="!status_true">Closed</p>
+                    </div>
+                    <div *ngIf="yelp_detail" class="mt-4 pl-3 pr-3 col-md-6 col-11 mx-auto" style="text-align:'center'">
+                        <h5>Visit yelp for more</h5>
+                        <a href={{yelp_detail.url}} target='_blank'>Business link</a>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <br>
+                    <button *ngIf=show_reserve type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Reserve Now</button>
+                    <button *ngIf=!show_reserve (click)="cancel()" type="button" class="btn btn-primary">Cancel reservation</button>
+                </div>
+                <div *ngIf="yelp_detail" class="text-center">
+                    <br>
+                    <a>Share on: </a>
+                    <a href="https://twitter.com/intent/tweet?text=Check {{yelp_detail.name}} on Yelp.&url={{yelp_detail.url}}" target="_blank">
+                        <img width="30" height="30" src="{{twitter_svg}}" alt="twitter">
+                    </a>
+                    <a href="https://www.facebook.com/share.php?u={{yelp_detail.url}}" target="_blank">
+                        <img width="30" height="30" src="{{facebook_svg}}" alt="facebook">
+                    </a>
+                </div>
+                <div id="carouselExampleControlsNoTouching" class="m-4 carousel carousel-dark slide" data-bs-touch="false" data-bs-interval="false">
+                    <br>
+                    <div *ngIf="yelp_detail" class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img style="aspect-ratio: 1;" width="400" height="100%" src="{{yelp_detail.photos[0]}}" class="mx-auto d-block w-50" alt="photo1">
+                      </div>
+                      <div class="carousel-item">
+                        <img style="aspect-ratio: 1;" width="400" height="100%" src="{{yelp_detail.photos[1]}}" class="mx-auto d-block w-50" alt="photo2">
+                      </div>
+                      <div class="carousel-item">
+                        <img style="aspect-ratio: 1;" width="400" height="100%" src="{{yelp_detail.photos[2]}}" class="mx-auto d-block w-50" alt="photo3">
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </mat-tab>
+            <mat-tab label="Map location">
+                <div class="my-google-map mt-3 mb-3">
+                    <google-map width="100%" height="500px" [options]="get_map_options">
+                        <map-marker [position]="get_marker.position"></map-marker>
+                    </google-map>
+                </div>
+            </mat-tab>
+            <mat-tab label="Reviews">
+                <div class="pl-2 pr-2" *ngIf="yelp_review">
+                    <div class="text-bg-light pt-2 pb-2" *ngIf="yelp_review.reviews[0]">
+                        <strong>{{yelp_review.reviews[0].user.name}}</strong><br>
+                        <a>Rating: {{yelp_review.reviews[0].rating}}/5</a><br>
+                        <br>
+                        <a>{{yelp_review.reviews[0].text}}</a><br>
+                        <br>
+                        <a>{{yelp_review.reviews[0].time_created.slice(0,10)}}</a>
+                        <p></p>
+                    </div>
+                    <div class="pt-2 pb-2" *ngIf="yelp_review.reviews[1]">
+                        <strong>{{yelp_review.reviews[1].user.name}}</strong><br>
+                        <a>Rating: {{yelp_review.reviews[1].rating}}/5</a><br>
+                        <br>
+                        <a>{{yelp_review.reviews[1].text}}</a><br>
+                        <br>
+                        <a>{{yelp_review.reviews[1].time_created.slice(0,10)}}</a>
+                        <p></p>
+                    </div>
+                    <div class="text-bg-light pt-2 pb-2" *ngIf="yelp_review.reviews[2]">
+                        <strong>{{yelp_review.reviews[2].user.name}}</strong><br>
+                        <a>Rating: {{yelp_review.reviews[2].rating}}/5</a><br>
+                        <br>
+                        <a>{{yelp_review.reviews[2].text}}</a><br>
+                        <br>
+                        <a>{{yelp_review.reviews[2].time_created.slice(0,10)}}</a>
+                        <p></p>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+<!-- Modal Reservation Form -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Reservation form</h5>
+        </div>
+        <div class="modal-body" *ngIf="yelp_detail">
+            <form class="needs-validation" name="reservation" (ngSubmit)="submit_reservation($event)" ngNativeValidate>
+                <h5 class="text-center modal-title">{{yelp_detail.name}}</h5>
+                <div class="row ml-1 mr-1">
+                    <label for="email" class="col-form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email_val" required>
+                    <div class="invalid-feedback">
+                        Email is required
+                    </div>
+                </div>
+                <div class="row ml-1 mr-1">
+                    <label for="date" class="col-form-label">Date</label>
+                    <input type="date" class="form-control" id="date" name='date' [(ngModel)]="date_val" required>
+                    <div class="invalid-feedback">
+                        Date is required
+                    </div>
+                </div>
+                <div class="row ml-1 mr-1">
+                    <label for="message-text" class="col-form-label">Time</label>
+                    <div class="form-row">
+                        <select class="form-control col-3 col-md-3" id="hours" name="hours" [(ngModel)]="hours_val" required>
+                            <option style="display: none"></option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                        </select>
+                        <span>&nbsp;&nbsp;:&nbsp;&nbsp;</span>
+                        <select class="form-control col-3 col-md-3" id="minutes" name="minutes" [(ngModel)]="minutes_val" required>
+                            <option style="display: none"></option>
+                            <option value="0">00</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="45">45</option>
+                        </select>
+                        <span>&nbsp;&nbsp;</span>
+                        <img width="30" height="30" src="{{clock_jpg}}" alt="clock">
+                    </div>
+                </div>
+                <br>
+                <div class="text-center mb-3">
+                    <button type="submit" class="btn btn-danger">Sumbit</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button #closebutton (click)="close_reservation()" type="reset" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>

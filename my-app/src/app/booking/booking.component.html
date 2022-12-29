@@ -1,0 +1,36 @@
+<div *ngIf="!have_reservations" class="bg-white mt-5 rounded-5 col-11 col-md-3 mx-auto text-center text-danger">
+  <strong>No reservation to show</strong>
+</div>
+
+<div *ngIf="have_reservations" class="row">
+    <div class="text-center mt-4">
+        <h4>List of your reservation</h4>
+    </div>
+    <div>
+      <table class="table text-center table-hover bg-white mt-4 mb-0 rounded-4 col-11 col-md-7 mx-auto">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Business Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">E-mail</th>
+            <th scope="col"> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of show_bookings; index as i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{data.name}}</td>
+            <td>{{data.date}}</td>
+            <td>{{data.hours}}:{{data.minutes}}</td>
+            <td>{{data.email}}</td>
+            <td (click)="delete_bookings(i)">
+                <img width="20" height="20" style="cursor: pointer;" src={{trashcan_png}} alt="delete">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
