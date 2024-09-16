@@ -2,7 +2,7 @@
 
 ## Demo Link
 [Watch the Demo](https://www.youtube.com/watch?v=LQl_pRFscUU)
-![image](https://github.com/user-attachments/assets/7fcea364-d551-4e06-99f7-00e374acd7c6)
+[![image](https://github.com/user-attachments/assets/7fcea364-d551-4e06-99f7-00e374acd7c6)](https://www.youtube.com/watch?v=LQl_pRFscUU)
 
 
 ## Overview
