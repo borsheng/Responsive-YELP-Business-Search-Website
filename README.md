@@ -2,6 +2,8 @@
 
 ## Demo Link
 [Watch the Demo](https://www.youtube.com/watch?v=LQl_pRFscUU)
+![image](https://github.com/user-attachments/assets/7fcea364-d551-4e06-99f7-00e374acd7c6)
+
 
 ## Overview
 The Responsive YELP Business Search Website is a web application that enables users to search for businesses and make reservations. Built with a front-end in Angular and a back-end in Node.js, this project utilizes the Yelp API to provide a seamless search experience. The site is designed to be responsive using Bootstrap, ensuring compatibility across various devices and screen sizes.
